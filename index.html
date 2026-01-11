@@ -329,11 +329,96 @@
     </main>
 
     <!-- ================= FOOTER ================= -->
-    <footer class="bg-black border-t border-slate-900 py-12">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <h3 class="text-2xl font-bold text-white mb-2">NantawatLoan</h3>
-            <p class="text-slate-500 text-sm mb-8">Financial Technology Solutions</p>
-            <p class="text-slate-700 text-xs">Copyright © 2024. All rights reserved.</p>
+    <footer class="bg-slate-950 border-t border-slate-900 pt-16 pb-8 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                
+                <!-- Company Info -->
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="bg-gradient-to-r from-cyan-600 to-blue-600 p-1.5 rounded-lg mr-2">
+                            <i data-lucide="zap" class="h-5 w-5 text-white"></i>
+                        </div>
+                        <span class="font-bold text-lg text-white tracking-wider">Nantawat<span class="text-cyan-400">Loan</span></span>
+                    </div>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-6">
+                        นวัตกรรมสินเชื่อดิจิทัลอนุมัติไวด้วยระบบ AI ที่ทันสมัยที่สุด ปลอดภัย โปร่งใส และตรวจสอบได้จริง
+                    </p>
+                    <div class="flex space-x-3">
+                        <a href="#" class="w-8 h-8 rounded bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-cyan-400 hover:border-cyan-500/50 transition-all">
+                            <i data-lucide="facebook" class="w-4 h-4"></i>
+                        </a>
+                        <a href="#" class="w-8 h-8 rounded bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-green-400 hover:border-green-500/50 transition-all">
+                            <i data-lucide="message-circle" class="w-4 h-4"></i>
+                        </a>
+                        <a href="#" class="w-8 h-8 rounded bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-pink-400 hover:border-pink-500/50 transition-all">
+                            <i data-lucide="instagram" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-sm font-bold text-white uppercase tracking-widest mb-6 border-l-2 border-cyan-500 pl-3">เมนูหลัก</h4>
+                    <ul class="space-y-3 text-sm text-slate-400">
+                        <li><button onclick="app.router('home')" class="hover:text-cyan-400 transition flex items-center"><i data-lucide="chevron-right" class="w-3 h-3 mr-2 text-slate-600"></i> หน้าแรก</button></li>
+                        <li><button onclick="app.openModal('products')" class="hover:text-cyan-400 transition flex items-center"><i data-lucide="chevron-right" class="w-3 h-3 mr-2 text-slate-600"></i> ผลิตภัณฑ์สินเชื่อ</button></li>
+                        <li><button onclick="app.openModal('help')" class="hover:text-cyan-400 transition flex items-center"><i data-lucide="chevron-right" class="w-3 h-3 mr-2 text-slate-600"></i> ศูนย์ช่วยเหลือ</button></li>
+                        <li><button onclick="app.router('apply')" class="hover:text-cyan-400 transition flex items-center"><i data-lucide="chevron-right" class="w-3 h-3 mr-2 text-slate-600"></i> สมัครสินเชื่อ</button></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h4 class="text-sm font-bold text-white uppercase tracking-widest mb-6 border-l-2 border-cyan-500 pl-3">ติดต่อเรา</h4>
+                    <ul class="space-y-4 text-sm text-slate-400">
+                        <li class="flex items-start">
+                            <i data-lucide="map-pin" class="w-5 h-5 text-cyan-500 mr-3 mt-0.5 shrink-0"></i>
+                            <span>123 อาคารนันทวัฒน์ ทาวเวอร์ ชั้น 15 <br>ถนนรัชดาภิเษก เขตดินแดง <br>กรุงเทพมหานคร 10400</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i data-lucide="phone" class="w-5 h-5 text-cyan-500 mr-3 shrink-0"></i>
+                            <span class="font-mono">02-123-4567</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i data-lucide="mail" class="w-5 h-5 text-cyan-500 mr-3 shrink-0"></i>
+                            <a href="mailto:contact@nantawatloan.com" class="hover:text-white transition">contact@nantawatloan.com</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Hours -->
+                <div>
+                    <h4 class="text-sm font-bold text-white uppercase tracking-widest mb-6 border-l-2 border-cyan-500 pl-3">เวลาทำการ</h4>
+                    <div class="bg-slate-900 p-4 rounded border border-slate-800">
+                        <ul class="space-y-3 text-sm text-slate-400">
+                            <li class="flex justify-between">
+                                <span>จันทร์ - ศุกร์</span>
+                                <span class="text-white font-mono">08:00 - 20:00</span>
+                            </li>
+                            <li class="flex justify-between">
+                                <span>เสาร์ - อาทิตย์</span>
+                                <span class="text-white font-mono">09:00 - 18:00</span>
+                            </li>
+                            <li class="pt-2 border-t border-slate-800 mt-2 text-xs text-center text-cyan-500 flex items-center justify-center">
+                                <i data-lucide="check-circle" class="w-3 h-3 mr-1"></i> ระบบออนไลน์ 24 ชม.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Divider -->
+            <div class="border-t border-slate-900 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-600">
+                <p>&copy; 2024 NantawatLoan. สงวนลิขสิทธิ์.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-slate-400">นโยบายความเป็นส่วนตัว</a>
+                    <a href="#" class="hover:text-slate-400">เงื่อนไขการใช้บริการ</a>
+                    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="hover:text-cyan-400 flex items-center">
+                        กลับสู่ด้านบน <i data-lucide="arrow-up" class="ml-1 w-3 h-3"></i>
+                    </button>
+                </div>
+            </div>
         </div>
     </footer>
 
@@ -361,13 +446,33 @@
         import { getFirestore, collection, addDoc, query, orderBy, limit, onSnapshot, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
         // --- Configuration ---
-        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        // Load config safely. If undefined, default to empty object.
+        let firebaseConfig = {};
+        try {
+            firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        } catch (e) {
+            console.warn("Using empty config");
+        }
+        
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
         
-        // Initialize Firebase
-        const firebaseApp = initializeApp(firebaseConfig);
-        const auth = getAuth(firebaseApp);
-        const db = getFirestore(firebaseApp);
+        // Initialize Firebase variables
+        let firebaseApp, auth, db;
+        
+        // Check if we have a valid config (basic check)
+        const isConfigValid = firebaseConfig && firebaseConfig.apiKey;
+
+        if (isConfigValid) {
+            try {
+                firebaseApp = initializeApp(firebaseConfig);
+                auth = getAuth(firebaseApp);
+                db = getFirestore(firebaseApp);
+            } catch (err) {
+                console.error("Firebase Init Failed:", err);
+            }
+        } else {
+            console.log("Running in Demo/Offline Mode (No Firebase Config)");
+        }
 
         // --- Application State ---
         const state = {
@@ -387,38 +492,47 @@
         // --- Core Application Logic (Global 'app' Object) ---
         window.app = {
             init: async () => {
-                // Initial Loading Simulation
+                // Ensure loading screen hides regardless of errors
                 setTimeout(() => {
-                    document.getElementById('loading-screen').classList.add('opacity-0');
-                    setTimeout(() => {
-                        document.getElementById('loading-screen').classList.add('hidden');
-                    }, 500);
+                    const loader = document.getElementById('loading-screen');
+                    if (loader) {
+                        loader.classList.add('opacity-0');
+                        setTimeout(() => loader.classList.add('hidden'), 500);
+                    }
                 }, 2000);
 
                 // Initialize Lucide Icons
                 lucide.createIcons();
                 app.updateCalculator();
 
-                // Authentication
-                const initialToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-                if (initialToken) {
-                    await signInWithCustomToken(auth, initialToken);
-                } else {
-                    await signInAnonymously(auth);
-                }
-
-                // Auth Listener
-                onAuthStateChanged(auth, (user) => {
-                    state.user = user;
-                    app.renderAuthButtons();
-                    if (user) {
-                        app.listenToApplications(user.uid);
+                if (auth) {
+                    // Real Auth Logic
+                    const initialToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+                    if (initialToken) {
+                        await signInWithCustomToken(auth, initialToken);
+                    } else {
+                        await signInAnonymously(auth);
                     }
-                });
+
+                    onAuthStateChanged(auth, (user) => {
+                        state.user = user;
+                        app.renderAuthButtons();
+                        if (user) {
+                            app.listenToApplications(user.uid);
+                        }
+                    });
+                } else {
+                    // Demo Mode Logic
+                    console.log("Auth not initialized - UI Only Mode");
+                    // Mock a user
+                    state.user = { uid: 'demo-user', isAnonymous: true };
+                    app.renderAuthButtons();
+                }
             },
 
             // Firestore Real-time Listener
             listenToApplications: (uid) => {
+                if (!db) return; // Guard for demo mode
                 const q = query(
                     collection(db, 'artifacts', appId, 'users', uid, 'applications'),
                     orderBy('createdAt', 'desc'),
@@ -499,60 +613,96 @@
             },
 
             // --- Notification Function (DISCORD WEBHOOK) ---
-            notifyAdmin: async (data) => {
-                // สร้างข้อมูลสำหรับ Discord Embed (รูปแบบการ์ดสวยงาม)
-                const payload = {
-                    username: "NantawatLoan Bot",
-                    avatar_url: "https://cdn-icons-png.flaticon.com/512/4712/4712109.png", // ไอคอนบอท (ตัวอย่าง)
-                    embeds: [{
-                        title: "🔔 มีคำขอสินเชื่อใหม่!",
-                        color: data.finalStatus === 'approved' ? 0x00ff00 : 0xff0000, // เขียวถ้าผ่าน, แดงถ้าไม่ผ่าน
+            notifyAdmin: async (type, data) => {
+                let embed = {};
+                let contentMessage = "";
+
+                if (type === 'application') {
+                    contentMessage = "🔥 มีลูกค้าสมัครสินเชื่อใหม่!";
+                    embed = {
+                        title: "📄 ใบสมัครสินเชื่อ (New Application)",
+                        color: data.finalStatus === 'approved' ? 5763719 : 15548997, // Green : Red
                         fields: [
-                            { name: "👤 ชื่อ-นามสกุล", value: data.fullName, inline: true },
-                            { name: "📞 เบอร์โทรศัพท์", value: data.phone, inline: true },
-                            { name: "💰 วงเงินที่ขอกู้", value: formatCurrency(data.loanAmount), inline: true },
-                            { name: "📅 ระยะเวลา", value: `${data.loanWeeks} สัปดาห์`, inline: true },
-                            { name: "💵 รายได้ต่อเดือน", value: formatCurrency(data.salary), inline: true },
-                            { name: "📊 ผลการประเมิน AI", value: data.finalStatus === 'approved' ? '✅ อนุมัติ (Approved)' : '❌ ไม่อนุมัติ (Rejected)', inline: false },
-                            { name: "📝 เหตุผล/หมายเหตุ", value: data.rejectReason || '-', inline: false }
+                            { name: "ชื่อ-นามสกุล", value: data.fullName, inline: true },
+                            { name: "เบอร์โทร", value: data.phone, inline: true },
+                            { name: "วงเงินที่ขอ", value: formatCurrency(data.loanAmount), inline: true },
+                            { name: "รายได้", value: formatCurrency(data.salary), inline: true },
+                            { name: "อาชีพ/ระยะเวลา", value: `${data.loanWeeks} สัปดาห์`, inline: true },
+                            { name: "สถานะ AI", value: data.finalStatus === 'approved' ? "✅ อนุมัติ" : "❌ ไม่อนุมัติ", inline: false },
+                            { name: "หมายเหตุ", value: data.rejectReason || "-", inline: false }
                         ],
-                        footer: {
-                            text: `Reference ID: ${data.refId || 'N/A'} • ${new Date().toLocaleString('th-TH')}`
-                        }
-                    }]
+                        footer: { text: `Ref: ${data.refId} • IP: ${state.user?.uid || 'Guest'}` },
+                        timestamp: new Date().toISOString()
+                    };
+                } else if (type === 'payment') {
+                    contentMessage = "💰 มีการแจ้งชำระเงินเข้ามา!";
+                    embed = {
+                        title: "slip แจ้งชำระเงิน (Payment)",
+                        color: 3447003, // Blue
+                        fields: [
+                            { name: "ผู้ชำระ", value: data.fullName, inline: true },
+                            { name: "ยอดเงิน", value: formatCurrency(data.amount), inline: true },
+                            { name: "Ref ID", value: data.refId, inline: true }
+                        ],
+                        timestamp: new Date().toISOString()
+                    };
+                }
+
+                const body = {
+                    username: "NantawatLoan Bot",
+                    avatar_url: "https://cdn-icons-png.flaticon.com/512/4712/4712109.png",
+                    content: contentMessage,
+                    embeds: [embed]
                 };
 
-                // แสดงผลใน Console
-                console.log("--- SENDING DISCORD NOTIFICATION ---");
-                console.log(payload);
+                // 2. Send to Discord
+                // *** ใส่ Link Discord Webhook ตรงนี้ ***
+                const WEBHOOK_URL = 'https://discord.com/api/webhooks/1459799911527878687/YSo-OoqoVZ-HBfUoM8ynTPJcQELsERroBeoyxo4lltYMCvlWhZcP6q2Ch5U9QizE5GTN'; 
 
-                // --- DISCORD WEBHOOK CONFIGURATION ---
-                // วิธีหา Webhook URL:
-                // 1. ไปที่ Discord Server ของคุณ > Edit Channel > Integrations > Webhooks
-                // 2. สร้าง Webhook ใหม่ > Copy Webhook URL
-                // 3. นำมาใส่ในตัวแปรด้านล่างนี้
-                
-                const DISCORD_WEBHOOK_URL = ''; // <--- ใส่ Discord Webhook URL ของคุณที่นี่
+                console.log("--- DISCORD PAYLOAD ---", body);
 
-                if (!DISCORD_WEBHOOK_URL) return;
+                if (!WEBHOOK_URL) {
+                    console.warn("⚠️ ไม่ได้ตั้งค่า Discord Webhook URL (ดูใน Console เพื่อจำลองการทำงาน)");
+                    return;
+                }
 
                 try {
-                    await fetch(DISCORD_WEBHOOK_URL, {
+                    await fetch(WEBHOOK_URL, {
                         method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(payload)
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(body)
                     });
-                    console.log("Discord notification sent successfully!");
-                } catch (error) {
-                    console.error("Error sending Discord notification:", error);
+                    console.log("✅ Sent to Discord successfully");
+                } catch (err) {
+                    console.error("❌ Error sending to Discord (อาจติด CORS หากรันบน Browser):", err);
                 }
+            },
+
+            // Handle Notify Payment (เรียกจากปุ่มใน Modal)
+            handlePaymentNotify: async () => {
+                if (!state.applicationData) return;
+                
+                const btn = document.getElementById('btn-notify-payment');
+                if(btn) {
+                     btn.textContent = 'กำลังแจ้งเตือน...';
+                     btn.disabled = true;
+                }
+
+                // ส่งการแจ้งเตือน
+                await app.notifyAdmin('payment', {
+                    fullName: state.applicationData.fullName,
+                    amount: state.applicationData.weeklyPayment,
+                    refId: state.applicationData.refId
+                });
+                
+                alert("แจ้งชำระเงินเรียบร้อย! เจ้าหน้าที่จะตรวจสอบยอดเงินของท่าน");
+                app.closeModal();
             },
 
             // Form Submission
             handleApply: async (e) => {
                 e.preventDefault();
+                
                 if (!state.user) return;
 
                 const btn = document.getElementById('btn-submit');
@@ -579,6 +729,36 @@
                     rejectReason = 'รายได้ไม่เพียงพอต่อการผ่อนชำระ';
                 }
 
+                // Handle Mocking if no DB
+                if (!db) {
+                    // Create mock Application Data
+                    state.applicationData = {
+                        fullName, idCard, phone, salary,
+                        loanAmount: state.loanAmount,
+                        loanWeeks: state.loanWeeks,
+                        weeklyPayment: state.weeklyPayment,
+                        status: 'pending',
+                        finalStatus: status,
+                        rejectReason,
+                        createdAtDate: new Date(),
+                        refId: `LD-${Math.floor(Math.random() * 1000000)}`
+                    };
+
+                    // Send Discord Notification (Mock Flow)
+                    await app.notifyAdmin('application', state.applicationData);
+
+                    // Redirect
+                    setTimeout(() => {
+                        app.router('dashboard');
+                        btn.textContent = 'ส่งใบสมัคร';
+                        btn.disabled = false;
+                        e.target.reset();
+                    }, 1500);
+
+                    return;
+                }
+
+                // Real Firebase Logic
                 try {
                     await addDoc(collection(db, 'artifacts', appId, 'users', state.user.uid, 'applications'), {
                         fullName, idCard, phone, salary,
@@ -592,12 +772,13 @@
                         refId: `LD-${Math.floor(Math.random() * 1000000)}`
                     });
 
-                    // เรียกใช้ฟังก์ชันแจ้งเตือน (NEW)
-                    await app.notifyAdmin({
+                    // เรียกใช้ฟังก์ชันแจ้งเตือน (Updated)
+                    await app.notifyAdmin('application', {
                         fullName,
                         loanAmount: state.loanAmount,
                         loanWeeks: state.loanWeeks,
                         phone,
+                        salary,
                         finalStatus: status,
                         rejectReason
                     });
@@ -823,6 +1004,9 @@
                               <p class="text-cyan-600 font-bold text-2xl">${formatCurrency(amount)}</p>
                               <p class="text-slate-400 text-[10px] mt-2 font-mono">ผู้รับเงิน: บจก. นันทวัฒน์โลน</p>
                            </div>
+                           <button id="btn-notify-payment" onclick="app.handlePaymentNotify()" class="w-full mt-4 bg-blue-600 text-white py-2 rounded font-bold hover:bg-blue-500 transition shadow-lg text-sm flex items-center justify-center">
+                               <i data-lucide="bell" class="w-4 h-4 mr-2"></i> แจ้งชำระเงินแล้ว
+                           </button>
                         </div>
                     `;
                 }
@@ -839,123 +1023,5 @@
         // Start App
         app.init();
     </script>
-    <!-- ... existing code ... -->
-    <!-- ================= VIEWS CONTAINER ================= -->
-    <main id="app-container">
-        
-        <!-- VIEW: HOME -->
-<!-- ... existing code ... -->
-        <!-- VIEW: DASHBOARD -->
-        <div id="view-dashboard" class="view-section hidden bg-slate-950 min-h-screen py-10 relative overflow-hidden">
-            <div class="max-w-4xl mx-auto px-4 relative z-10 animate-fade-in">
-                <h2 class="text-2xl font-bold text-white mb-6 uppercase tracking-wider flex items-center">
-                    <span class="w-1 h-8 bg-cyan-500 mr-4"></span>
-                    สถานะบัญชี
-                </h2>
-
-                <div id="dashboard-content">
-                    <!-- Content will be injected by JS -->
-                </div>
-            </div>
-        </div>
-
-    </main>
-
-    <!-- ================= FOOTER ================= -->
-    <footer class="bg-slate-950 border-t border-slate-900 pt-16 pb-8 relative z-10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
-                
-                <!-- Company Info -->
-                <div>
-                    <div class="flex items-center mb-4">
-                        <div class="bg-gradient-to-r from-cyan-600 to-blue-600 p-1.5 rounded-lg mr-2">
-                            <i data-lucide="zap" class="h-5 w-5 text-white"></i>
-                        </div>
-                        <span class="font-bold text-lg text-white tracking-wider">Nantawat<span class="text-cyan-400">Loan</span></span>
-                    </div>
-                    <p class="text-slate-500 text-sm leading-relaxed mb-6">
-                        นวัตกรรมสินเชื่อดิจิทัลอนุมัติไวด้วยระบบ AI ที่ทันสมัยที่สุด ปลอดภัย โปร่งใส และตรวจสอบได้จริง
-                    </p>
-                    <div class="flex space-x-3">
-                        <a href="#" class="w-8 h-8 rounded bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-cyan-400 hover:border-cyan-500/50 transition-all">
-                            <i data-lucide="facebook" class="w-4 h-4"></i>
-                        </a>
-                        <a href="#" class="w-8 h-8 rounded bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-green-400 hover:border-green-500/50 transition-all">
-                            <i data-lucide="message-circle" class="w-4 h-4"></i>
-                        </a>
-                        <a href="#" class="w-8 h-8 rounded bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-pink-400 hover:border-pink-500/50 transition-all">
-                            <i data-lucide="instagram" class="w-4 h-4"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Quick Links -->
-                <div>
-                    <h4 class="text-sm font-bold text-white uppercase tracking-widest mb-6 border-l-2 border-cyan-500 pl-3">เมนูหลัก</h4>
-                    <ul class="space-y-3 text-sm text-slate-400">
-                        <li><button onclick="app.router('home')" class="hover:text-cyan-400 transition flex items-center"><i data-lucide="chevron-right" class="w-3 h-3 mr-2 text-slate-600"></i> หน้าแรก</button></li>
-                        <li><button onclick="app.openModal('products')" class="hover:text-cyan-400 transition flex items-center"><i data-lucide="chevron-right" class="w-3 h-3 mr-2 text-slate-600"></i> ผลิตภัณฑ์สินเชื่อ</button></li>
-                        <li><button onclick="app.openModal('help')" class="hover:text-cyan-400 transition flex items-center"><i data-lucide="chevron-right" class="w-3 h-3 mr-2 text-slate-600"></i> ศูนย์ช่วยเหลือ</button></li>
-                        <li><button onclick="app.router('apply')" class="hover:text-cyan-400 transition flex items-center"><i data-lucide="chevron-right" class="w-3 h-3 mr-2 text-slate-600"></i> สมัครสินเชื่อ</button></li>
-                    </ul>
-                </div>
-
-                <!-- Contact Info -->
-                <div>
-                    <h4 class="text-sm font-bold text-white uppercase tracking-widest mb-6 border-l-2 border-cyan-500 pl-3">ติดต่อเรา</h4>
-                    <ul class="space-y-4 text-sm text-slate-400">
-                        <li class="flex items-start">
-                            <i data-lucide="map-pin" class="w-5 h-5 text-cyan-500 mr-3 mt-0.5 shrink-0"></i>
-                            <span>123 อาคารนันทวัฒน์ ทาวเวอร์ ชั้น 15 <br>ถนนรัชดาภิเษก เขตดินแดง <br>กรุงเทพมหานคร 10400</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i data-lucide="phone" class="w-5 h-5 text-cyan-500 mr-3 shrink-0"></i>
-                            <span class="font-mono">02-123-4567</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i data-lucide="mail" class="w-5 h-5 text-cyan-500 mr-3 shrink-0"></i>
-                            <a href="mailto:contact@nantawatloan.com" class="hover:text-white transition">contact@nantawatloan.com</a>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Hours -->
-                <div>
-                    <h4 class="text-sm font-bold text-white uppercase tracking-widest mb-6 border-l-2 border-cyan-500 pl-3">เวลาทำการ</h4>
-                    <div class="bg-slate-900 p-4 rounded border border-slate-800">
-                        <ul class="space-y-3 text-sm text-slate-400">
-                            <li class="flex justify-between">
-                                <span>จันทร์ - ศุกร์</span>
-                                <span class="text-white font-mono">08:00 - 20:00</span>
-                            </li>
-                            <li class="flex justify-between">
-                                <span>เสาร์ - อาทิตย์</span>
-                                <span class="text-white font-mono">09:00 - 18:00</span>
-                            </li>
-                            <li class="pt-2 border-t border-slate-800 mt-2 text-xs text-center text-cyan-500 flex items-center justify-center">
-                                <i data-lucide="check-circle" class="w-3 h-3 mr-1"></i> ระบบออนไลน์ 24 ชม.
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Divider -->
-            <div class="border-t border-slate-900 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-600">
-                <p>&copy; 2024 NantawatLoan. สงวนลิขสิทธิ์.</p>
-                <div class="flex space-x-6 mt-4 md:mt-0">
-                    <a href="#" class="hover:text-slate-400">นโยบายความเป็นส่วนตัว</a>
-                    <a href="#" class="hover:text-slate-400">เงื่อนไขการใช้บริการ</a>
-                    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="hover:text-cyan-400 flex items-center">
-                        กลับสู่ด้านบน <i data-lucide="arrow-up" class="ml-1 w-3 h-3"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- ================= MODALS ================= -->
-<!-- ... existing code ... -->
 </body>
 </html>
