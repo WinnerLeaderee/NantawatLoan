@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NantawatLoan - สินเชื่อดิจิทัลอนุมัติไว</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Custom Styles & Animations -->
+    <style>
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #020617; /* Slate 950 */
+            color: #e2e8f0;
+        }
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569; 
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        .animate-slide-up {
+            animation: slideUp 0.7s ease-out forwards;
+        }
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body class="selection:bg-cyan-500 selection:text-black">
+
+    <!-- ================= LOADING SCREEN ================= -->
+    <div id="loading-screen" class="fixed inset-0 z-[100] bg-slate-950 flex flex-col items-center justify-center transition-opacity duration-500">
+        <div class="relative w-24 h-24 mb-8">
+            <div class="absolute inset-0 border-4 border-slate-800 rounded-full"></div>
+            <div class="absolute inset-0 border-t-4 border-cyan-500 rounded-full animate-spin"></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+                <i data-lucide="zap" class="h-10 w-10 text-cyan-500 animate-pulse"></i>
+            </div>
+        </div>
+        <h2 class="text-2xl font-bold text-white tracking-[0.2em] animate-pulse">LOADING SYSTEM</h2>
+        <div class="flex items-center space-x-2 mt-4 text-cyan-500 font-mono text-xs">
+            <i data-lucide="loader-2" class="w-3 h-3 animate-spin"></i>
+            <span>ESTABLISHING SECURE CONNECTION...</span>
+        </div>
+    </div>
+
+    <!-- ================= TOP BAR (NEW) ================= -->
+    <div class="bg-slate-950 border-b border-slate-800 text-slate-400 text-xs py-2 relative z-[49]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+            <div class="flex items-center space-x-4 sm:space-x-6">
+                <span class="flex items-center hover:text-cyan-400 cursor-pointer transition-colors">
+                    <i data-lucide="phone" class="w-3 h-3 mr-2"></i> 02-123-4567
+                </span>
+                <span class="hidden sm:flex items-center hover:text-cyan-400 cursor-pointer transition-colors">
+                    <i data-lucide="mail" class="w-3 h-3 mr-2"></i> contact@nantawatloan.com
+                </span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <span class="flex items-center text-cyan-500 font-medium">
+                    <i data-lucide="clock" class="w-3 h-3 mr-2"></i> เปิดทำการทุกวัน 08:00 - 22:00
+                </span>
+                <div class="h-3 w-px bg-slate-700 hidden sm:block"></div>
+                <div class="hidden sm:flex items-center space-x-3">
+                    <a href="#" class="hover:text-white transition-colors flex items-center"><i data-lucide="facebook" class="w-3 h-3 mr-1"></i> FB</a>
+                    <a href="#" class="hover:text-white transition-colors flex items-center text-green-400"><i data-lucide="message-circle" class="w-3 h-3 mr-1"></i> Line</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= NAVBAR ================= -->
+    <nav class="bg-slate-900/95 backdrop-blur-md border-b border-cyan-900/50 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center cursor-pointer group" onclick="app.router('home')">
+                    <div class="bg-gradient-to-r from-cyan-600 to-blue-600 p-2 rounded-lg mr-2 shadow-[0_0_15px_rgba(8,145,178,0.5)] group-hover:shadow-[0_0_25px_rgba(8,145,178,0.8)] transition-all">
+                        <i data-lucide="zap" class="h-6 w-6 text-white"></i>
+                    </div>
+                    <span class="font-bold text-xl text-white tracking-wider">Nantawat<span class="text-cyan-400">Loan</span></span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <button onclick="app.router('home')" class="text-slate-400 hover:text-cyan-400 font-medium tracking-wide transition-colors" id="nav-home">หน้าหลัก</button>
+                    <button onclick="app.openModal('products')" class="text-slate-400 hover:text-cyan-400 font-medium tracking-wide transition-colors">ผลิตภัณฑ์</button>
+                    <button onclick="app.openModal('help')" class="text-slate-400 hover:text-cyan-400 font-medium tracking-wide transition-colors">ช่วยเหลือ</button>
+                    
+                    <!-- Dynamic Auth Button -->
+                    <div id="auth-button-container">
+                        <!-- Will be populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="text-cyan-400 hover:text-white">
+                        <i data-lucide="menu" class="h-6 w-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-900 border-b border-cyan-900/50 p-4 space-y-3 shadow-xl absolute w-full">
+            <button onclick="app.router('home'); document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left py-2 font-medium text-slate-300">หน้าหลัก</button>
+            <button onclick="app.openModal('products'); document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left py-2 font-medium text-slate-300">ผลิตภัณฑ์</button>
+            <button onclick="app.openModal('help'); document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left py-2 font-medium text-slate-300">ช่วยเหลือ</button>
+            <div id="mobile-auth-btn-container"></div>
+        </div>
+    </nav>
+
+    <!-- ================= VIEWS CONTAINER ================= -->
+    <main id="app-container">
+        
+        <!-- VIEW: HOME -->
+        <div id="view-home" class="view-section">
+            <div class="bg-slate-950 relative overflow-hidden pb-16 pt-10 min-h-[90vh] flex flex-col justify-center">
+                <!-- Background Effects -->
+                <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+                    <div class="absolute -top-20 -right-20 w-96 h-96 bg-cyan-600/10 rounded-full blur-3xl"></div>
+                    <div class="absolute top-40 -left-20 w-72 h-72 bg-purple-600/10 rounded-full blur-3xl"></div>
+                    <div class="absolute bottom-0 left-1/2 w-full h-1 bg-gradient-to-r from-transparent via-cyan-500 to-transparent opacity-50"></div>
+                </div>
+
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                        <!-- Left Content -->
+                        <div class="animate-slide-up">
+                            <div class="inline-flex items-center px-4 py-1 rounded-sm border border-cyan-500/30 bg-cyan-950/30 text-cyan-400 text-xs font-bold tracking-[0.2em] uppercase mb-6 backdrop-blur-sm">
+                                <span class="w-2 h-2 rounded-full bg-green-400 mr-2 animate-pulse"></span>
+                                ระบบออนไลน์ (Live System)
+                            </div>
+                            <h1 class="text-5xl md:text-7xl font-extrabold text-white leading-tight mb-6 tracking-tight">
+                                สินเชื่อดิจิทัล <br/>
+                                <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">อนุมัติจริง ด้วย AI</span>
+                            </h1>
+                            <p class="text-lg text-slate-400 mb-8 border-l-4 border-cyan-600 pl-4">
+                                ระบบวิเคราะห์เครดิตอัตโนมัติ เชื่อมต่อฐานข้อมูลจริง ปลอดภัยและรวดเร็ว
+                            </p>
+                            <button onclick="app.router('apply')" class="flex justify-center items-center bg-cyan-600 text-white px-8 py-4 rounded-sm font-bold text-lg hover:bg-cyan-500 transition shadow-[0_0_20px_rgba(6,182,212,0.4)] uppercase tracking-wider">
+                                <span class="flex items-center">ยื่นกู้ทันที <i data-lucide="chevron-right" class="ml-2 h-5 w-5"></i></span>
+                            </button>
+                        </div>
+
+                        <!-- Right Content (Calculator) -->
+                        <div class="bg-slate-900/90 backdrop-blur-xl rounded-lg border border-slate-700 p-8 shadow-2xl relative animate-slide-up" style="animation-delay: 0.2s;">
+                            <h3 class="text-2xl font-bold text-white mb-8 flex items-center tracking-wide">
+                                <i data-lucide="calculator" class="mr-3 text-cyan-400"></i> คำนวณสินเชื่อ
+                            </h3>
+                            
+                            <div class="space-y-8">
+                                <!-- Loan Amount Slider -->
+                                <div>
+                                    <div class="flex justify-between mb-3">
+                                        <label class="text-slate-400 font-medium text-xs uppercase tracking-widest">วงเงินที่ต้องการ</label>
+                                        <span id="display-amount" class="text-cyan-400 font-bold text-xl font-mono">฿2,000</span>
+                                    </div>
+                                    <input type="range" id="input-amount" min="2000" max="500000" step="1000" value="2000"
+                                        class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-500"
+                                        oninput="app.updateCalculator()">
+                                </div>
+
+                                <!-- Weeks Slider -->
+                                <div>
+                                    <div class="flex justify-between mb-3">
+                                        <label class="text-slate-400 font-medium text-xs uppercase tracking-widest">ระยะเวลาผ่อนชำระ</label>
+                                        <span id="display-weeks" class="text-purple-400 font-bold text-xl font-mono">4 สัปดาห์</span>
+                                    </div>
+                                    <input type="range" id="input-weeks" min="2" max="52" step="1" value="4"
+                                        class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-purple-500"
+                                        oninput="app.updateCalculator()">
+                                </div>
+
+                                <!-- Result Box -->
+                                <div class="bg-slate-950/80 border border-slate-800 rounded-lg p-6 mt-4">
+                                    <p class="text-slate-400 text-xs mb-1 uppercase tracking-wider">ยอดผ่อนต่อสัปดาห์</p>
+                                    <p id="display-payment" class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-600 font-mono tracking-tight">
+                                        ฿508
+                                    </p>
+                                </div>
+
+                                <button onclick="app.router('apply')" class="w-full bg-slate-800 text-white py-4 rounded-sm font-bold text-lg hover:bg-slate-700 transition uppercase tracking-wider border border-slate-600">
+                                    ใช้วงเงินนี้
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Section -->
+            <div class="py-20 bg-slate-900 border-t border-slate-800">
+                <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-3 gap-8">
+                    <!-- Feature 1 -->
+                    <div class="p-6 bg-slate-950 rounded border border-slate-800 hover:border-cyan-500/50 transition group">
+                        <i data-lucide="shield-check" class="w-10 h-10 text-cyan-500 mb-4 group-hover:scale-110 transition-transform"></i>
+                        <h3 class="text-xl font-bold text-white mb-2">Database จริง</h3>
+                        <p class="text-slate-400 text-sm">ข้อมูลถูกจัดเก็บใน Cloud Firestore อย่างปลอดภัย</p>
+                    </div>
+                    <!-- Feature 2 -->
+                    <div class="p-6 bg-slate-950 rounded border border-slate-800 hover:border-cyan-500/50 transition group">
+                        <i data-lucide="lock" class="w-10 h-10 text-cyan-500 mb-4 group-hover:scale-110 transition-transform"></i>
+                        <h3 class="text-xl font-bold text-white mb-2">Auth จริง</h3>
+                        <p class="text-slate-400 text-sm">ระบบยืนยันตัวตนแบบ Anonymous User ผ่าน Firebase Auth</p>
+                    </div>
+                    <!-- Feature 3 -->
+                    <div class="p-6 bg-slate-950 rounded border border-slate-800 hover:border-cyan-500/50 transition group">
+                        <i data-lucide="cpu" class="w-10 h-10 text-cyan-500 mb-4 group-hover:scale-110 transition-transform"></i>
+                        <h3 class="text-xl font-bold text-white mb-2">Logic จริง</h3>
+                        <p class="text-slate-400 text-sm">คำนวณวงเงินและพิจารณาอนุมัติจากฐานรายได้จริง</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW: APPLY FORM -->
+        <div id="view-apply" class="view-section hidden bg-slate-950 min-h-screen py-12 relative">
+            <div class="max-w-2xl mx-auto px-4 relative z-10 animate-fade-in">
+                <button onclick="app.router('home')" class="mb-6 text-slate-500 hover:text-cyan-400 flex items-center transition-colors font-mono text-sm">
+                    &lt; กลับหน้าหลัก
+                </button>
+                
+                <div class="bg-slate-900 rounded-lg border border-slate-700 shadow-2xl overflow-hidden">
+                    <div class="bg-gradient-to-r from-slate-900 to-slate-800 p-6 border-b border-slate-700 flex justify-between items-center">
+                        <div>
+                            <h2 class="text-2xl font-bold text-white flex items-center tracking-wide">
+                                <i data-lucide="file-text" class="mr-3 text-cyan-400"></i> ข้อมูลการสมัคร
+                            </h2>
+                            <p class="text-slate-400 text-xs mt-1 uppercase tracking-widest font-mono">:: Secure Connection ::</p>
+                        </div>
+                        <i data-lucide="lock" class="text-green-500 w-5 h-5"></i>
+                    </div>
+                    
+                    <form id="apply-form" onsubmit="app.handleApply(event)" class="p-8 space-y-8">
+                        <div class="space-y-4">
+                            <h3 class="text-sm font-bold text-cyan-500 uppercase tracking-widest border-b border-slate-700 pb-2">รายละเอียด</h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="col-span-2 sm:col-span-1">
+                                    <label class="block text-xs font-medium text-slate-400 mb-2 uppercase">วงเงิน</label>
+                                    <div id="form-display-amount" class="bg-slate-950 border border-slate-700 p-3 rounded text-white font-mono font-bold">฿0</div>
+                                </div>
+                                <div class="col-span-2 sm:col-span-1">
+                                    <label class="block text-xs font-medium text-slate-400 mb-2 uppercase">ระยะเวลา</label>
+                                    <div id="form-display-weeks" class="bg-slate-950 border border-slate-700 p-3 rounded text-white font-mono font-bold">0 สัปดาห์</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <h3 class="text-sm font-bold text-cyan-500 uppercase tracking-widest border-b border-slate-700 pb-2">ข้อมูลผู้กู้</h3>
+                            <div>
+                                <label class="block text-xs font-medium text-slate-400 mb-2 uppercase">ชื่อ-นามสกุล</label>
+                                <input name="fullName" required type="text" class="w-full p-3 bg-slate-800 border border-slate-600 rounded text-white outline-none focus:border-cyan-500 transition-all font-mono">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-slate-400 mb-2 uppercase">เลขบัตรประชาชน</label>
+                                <input name="idCard" required type="text" maxlength="13" class="w-full p-3 bg-slate-800 border border-slate-600 rounded text-white outline-none focus:border-cyan-500 transition-all font-mono">
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-400 mb-2 uppercase">เบอร์โทรศัพท์</label>
+                                    <input name="phone" required type="tel" class="w-full p-3 bg-slate-800 border border-slate-600 rounded text-white outline-none focus:border-cyan-500 transition-all font-mono">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-400 mb-2 uppercase">รายได้ต่อเดือน</label>
+                                    <input name="salary" required type="number" class="w-full p-3 bg-slate-800 border border-slate-600 rounded text-white outline-none focus:border-cyan-500 transition-all font-mono">
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" id="btn-submit" class="w-full bg-cyan-600 text-white py-4 rounded font-bold text-lg hover:bg-cyan-500 transition uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed">
+                            ส่งใบสมัคร
+                        </button>
+                        <p class="text-center text-[10px] text-slate-600 font-mono">ข้อมูลจะถูกบันทึกในฐานข้อมูล Firestore อย่างปลอดภัย</p>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW: DASHBOARD -->
+        <div id="view-dashboard" class="view-section hidden bg-slate-950 min-h-screen py-10 relative overflow-hidden">
+            <div class="max-w-4xl mx-auto px-4 relative z-10 animate-fade-in">
+                <h2 class="text-2xl font-bold text-white mb-6 uppercase tracking-wider flex items-center">
+                    <span class="w-1 h-8 bg-cyan-500 mr-4"></span>
+                    สถานะบัญชี
+                </h2>
+
+                <div id="dashboard-content">
+                    <!-- Content will be injected by JS -->
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="bg-black border-t border-slate-900 py-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h3 class="text-2xl font-bold text-white mb-2">NantawatLoan</h3>
+            <p class="text-slate-500 text-sm mb-8">Financial Technology Solutions</p>
+            <p class="text-slate-700 text-xs">Copyright © 2024. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- ================= MODALS ================= -->
+    <div id="modal-overlay" class="fixed inset-0 z-[60] hidden flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/90 backdrop-blur-sm" onclick="app.closeModal()"></div>
+        <div class="relative bg-slate-900 border border-cyan-500/30 rounded-lg shadow-2xl w-full max-w-md p-6 animate-fade-in">
+            <button onclick="app.closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <div class="flex items-center mb-4 text-cyan-400">
+                <div id="modal-icon" class="mr-2"></div>
+                <h3 id="modal-title" class="text-xl font-bold uppercase tracking-wide">TITLE</h3>
+            </div>
+            <div id="modal-content" class="text-slate-300 max-h-[60vh] overflow-y-auto pr-2">
+                <!-- Content -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= JAVASCRIPT ================= -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        import { getFirestore, collection, addDoc, query, orderBy, limit, onSnapshot, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        // --- Configuration ---
+        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        
+        // Initialize Firebase
+        const firebaseApp = initializeApp(firebaseConfig);
+        const auth = getAuth(firebaseApp);
+        const db = getFirestore(firebaseApp);
+
+        // --- Application State ---
+        const state = {
+            user: null,
+            applicationData: null,
+            loanAmount: 2000,
+            loanWeeks: 4,
+            weeklyPayment: 0,
+            currentView: 'home'
+        };
+
+        // --- Helpers ---
+        const formatCurrency = (amount) => {
+            return new Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB', maximumFractionDigits: 0 }).format(amount);
+        };
+
+        // --- Core Application Logic (Global 'app' Object) ---
+        window.app = {
+            init: async () => {
+                // Initial Loading Simulation
+                setTimeout(() => {
+                    document.getElementById('loading-screen').classList.add('opacity-0');
+                    setTimeout(() => {
+                        document.getElementById('loading-screen').classList.add('hidden');
+                    }, 500);
+                }, 2000);
+
+                // Initialize Lucide Icons
+                lucide.createIcons();
+                app.updateCalculator();
+
+                // Authentication
+                const initialToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+                if (initialToken) {
+                    await signInWithCustomToken(auth, initialToken);
+                } else {
+                    await signInAnonymously(auth);
+                }
+
+                // Auth Listener
+                onAuthStateChanged(auth, (user) => {
+                    state.user = user;
+                    app.renderAuthButtons();
+                    if (user) {
+                        app.listenToApplications(user.uid);
+                    }
+                });
+            },
+
+            // Firestore Real-time Listener
+            listenToApplications: (uid) => {
+                const q = query(
+                    collection(db, 'artifacts', appId, 'users', uid, 'applications'),
+                    orderBy('createdAt', 'desc'),
+                    limit(1)
+                );
+
+                onSnapshot(q, (snapshot) => {
+                    if (!snapshot.empty) {
+                        state.applicationData = snapshot.docs[0].data();
+                        // Convert Timestamp to Date
+                        if(state.applicationData.createdAt && state.applicationData.createdAt.toDate) {
+                            state.applicationData.createdAtDate = state.applicationData.createdAt.toDate();
+                        }
+                    } else {
+                        state.applicationData = null;
+                    }
+                    app.renderAuthButtons();
+                    if (state.currentView === 'dashboard') {
+                        app.renderDashboard();
+                    }
+                }, (error) => {
+                    console.error("Error fetching data:", error);
+                });
+            },
+
+            // Navigation Router
+            router: (viewName) => {
+                if (viewName === state.currentView) return;
+                
+                // Show Global Loading briefly
+                document.getElementById('loading-screen').classList.remove('hidden', 'opacity-0');
+                
+                setTimeout(() => {
+                    // Hide all views
+                    document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
+                    
+                    // Show target view
+                    document.getElementById(`view-${viewName}`).classList.remove('hidden');
+                    state.currentView = viewName;
+                    
+                    // Specific View Logic
+                    if (viewName === 'apply') app.updateApplyForm();
+                    if (viewName === 'dashboard') app.renderDashboard();
+
+                    // Hide Loading
+                    window.scrollTo(0, 0);
+                    document.getElementById('loading-screen').classList.add('opacity-0');
+                    setTimeout(() => document.getElementById('loading-screen').classList.add('hidden'), 500);
+
+                    // Re-render nav styles
+                    app.renderAuthButtons();
+                }, 800);
+            },
+
+            // Loan Calculator Logic
+            updateCalculator: () => {
+                const amount = parseInt(document.getElementById('input-amount').value);
+                const weeks = parseInt(document.getElementById('input-weeks').value);
+                
+                state.loanAmount = amount;
+                state.loanWeeks = weeks;
+
+                const interestRate = 0.15;
+                const totalInterest = amount * interestRate * (weeks / 52);
+                const totalPay = amount + totalInterest;
+                const weekly = Math.ceil(totalPay / weeks);
+                state.weeklyPayment = weekly;
+
+                // Update DOM
+                document.getElementById('display-amount').textContent = formatCurrency(amount);
+                document.getElementById('display-weeks').textContent = `${weeks} สัปดาห์`;
+                document.getElementById('display-payment').textContent = formatCurrency(weekly);
+            },
+
+            updateApplyForm: () => {
+                document.getElementById('form-display-amount').textContent = formatCurrency(state.loanAmount);
+                document.getElementById('form-display-weeks').textContent = `${state.loanWeeks} สัปดาห์`;
+            },
+
+            // --- Notification Function (DISCORD WEBHOOK) ---
+            notifyAdmin: async (data) => {
+                // สร้างข้อมูลสำหรับ Discord Embed (รูปแบบการ์ดสวยงาม)
+                const payload = {
+                    username: "NantawatLoan Bot",
+                    avatar_url: "https://cdn-icons-png.flaticon.com/512/4712/4712109.png", // ไอคอนบอท (ตัวอย่าง)
+                    embeds: [{
+                        title: "🔔 มีคำขอสินเชื่อใหม่!",
+                        color: data.finalStatus === 'approved' ? 0x00ff00 : 0xff0000, // เขียวถ้าผ่าน, แดงถ้าไม่ผ่าน
+                        fields: [
+                            { name: "👤 ชื่อ-นามสกุล", value: data.fullName, inline: true },
+                            { name: "📞 เบอร์โทรศัพท์", value: data.phone, inline: true },
+                            { name: "💰 วงเงินที่ขอกู้", value: formatCurrency(data.loanAmount), inline: true },
+                            { name: "📅 ระยะเวลา", value: `${data.loanWeeks} สัปดาห์`, inline: true },
+                            { name: "💵 รายได้ต่อเดือน", value: formatCurrency(data.salary), inline: true },
+                            { name: "📊 ผลการประเมิน AI", value: data.finalStatus === 'approved' ? '✅ อนุมัติ (Approved)' : '❌ ไม่อนุมัติ (Rejected)', inline: false },
+                            { name: "📝 เหตุผล/หมายเหตุ", value: data.rejectReason || '-', inline: false }
+                        ],
+                        footer: {
+                            text: `Reference ID: ${data.refId || 'N/A'} • ${new Date().toLocaleString('th-TH')}`
+                        }
+                    }]
+                };
+
+                // แสดงผลใน Console
+                console.log("--- SENDING DISCORD NOTIFICATION ---");
+                console.log(payload);
+
+                // --- DISCORD WEBHOOK CONFIGURATION ---
+                // วิธีหา Webhook URL:
+                // 1. ไปที่ Discord Server ของคุณ > Edit Channel > Integrations > Webhooks
+                // 2. สร้าง Webhook ใหม่ > Copy Webhook URL
+                // 3. นำมาใส่ในตัวแปรด้านล่างนี้
+                
+                const DISCORD_WEBHOOK_URL = ''; // <--- ใส่ Discord Webhook URL ของคุณที่นี่
+
+                if (!DISCORD_WEBHOOK_URL) return;
+
+                try {
+                    await fetch(DISCORD_WEBHOOK_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(payload)
+                    });
+                    console.log("Discord notification sent successfully!");
+                } catch (error) {
+                    console.error("Error sending Discord notification:", error);
+                }
+            },
+
+            // Form Submission
+            handleApply: async (e) => {
+                e.preventDefault();
+                if (!state.user) return;
+
+                const btn = document.getElementById('btn-submit');
+                btn.textContent = 'กำลังส่งข้อมูลและแจ้งเตือน...';
+                btn.disabled = true;
+
+                const formData = new FormData(e.target);
+                const salary = Number(formData.get('salary'));
+                const fullName = formData.get('fullName');
+                const idCard = formData.get('idCard');
+                const phone = formData.get('phone');
+
+                // Logic Approve/Reject
+                const maxLoan = salary * 5;
+                const minSalaryReq = state.weeklyPayment * 2.5;
+                let status = 'approved';
+                let rejectReason = '';
+
+                if (state.loanAmount > maxLoan) {
+                    status = 'rejected';
+                    rejectReason = 'วงเงินกู้สูงเกินสัดส่วนรายได้';
+                } else if (salary < minSalaryReq * 4) {
+                    status = 'rejected';
+                    rejectReason = 'รายได้ไม่เพียงพอต่อการผ่อนชำระ';
+                }
+
+                try {
+                    await addDoc(collection(db, 'artifacts', appId, 'users', state.user.uid, 'applications'), {
+                        fullName, idCard, phone, salary,
+                        loanAmount: state.loanAmount,
+                        loanWeeks: state.loanWeeks,
+                        weeklyPayment: state.weeklyPayment,
+                        status: 'pending',
+                        finalStatus: status,
+                        rejectReason,
+                        createdAt: serverTimestamp(),
+                        refId: `LD-${Math.floor(Math.random() * 1000000)}`
+                    });
+
+                    // เรียกใช้ฟังก์ชันแจ้งเตือน (NEW)
+                    await app.notifyAdmin({
+                        fullName,
+                        loanAmount: state.loanAmount,
+                        loanWeeks: state.loanWeeks,
+                        phone,
+                        finalStatus: status,
+                        rejectReason
+                    });
+
+                    // Redirect to Dashboard with delay
+                    setTimeout(() => {
+                        app.router('dashboard');
+                        btn.textContent = 'ส่งใบสมัคร';
+                        btn.disabled = false;
+                        e.target.reset();
+                    }, 1500);
+
+                } catch (error) {
+                    console.error("Error:", error);
+                    alert("เกิดข้อผิดพลาดในการเชื่อมต่อ");
+                    btn.textContent = 'ส่งใบสมัคร';
+                    btn.disabled = false;
+                }
+            },
+
+            // Dashboard Rendering
+            renderDashboard: () => {
+                const container = document.getElementById('dashboard-content');
+                const data = state.applicationData;
+
+                if (!data) {
+                    container.innerHTML = `<div class="text-center text-slate-400">ไม่พบข้อมูลการสมัคร</div>`;
+                    return;
+                }
+
+                // Simulate Processing Delay logic
+                const now = new Date();
+                const created = data.createdAtDate || now;
+                const diff = now - created;
+                const shouldShowRealStatus = diff > 4000;
+
+                const displayStatus = shouldShowRealStatus ? (data.finalStatus || data.status) : 'processing';
+
+                // Re-render if waiting
+                if (!shouldShowRealStatus) {
+                   setTimeout(() => app.renderDashboard(), 4000 - diff);
+                }
+
+                if (displayStatus === 'processing' || displayStatus === 'pending') {
+                    container.innerHTML = `
+                        <div class="bg-slate-900 rounded-lg border border-slate-700 p-16 text-center shadow-xl">
+                           <div class="w-24 h-24 relative mx-auto mb-8">
+                              <div class="absolute inset-0 border-4 border-slate-700 rounded-full"></div>
+                              <div class="absolute inset-0 border-t-4 border-cyan-500 rounded-full animate-spin"></div>
+                              <div class="absolute inset-0 flex items-center justify-center">
+                                <i data-lucide="server" class="h-10 w-10 text-cyan-500 animate-pulse"></i>
+                              </div>
+                           </div>
+                           <h3 class="text-2xl font-bold text-white mb-2 uppercase tracking-wide animate-pulse">กำลังประมวลผลข้อมูล...</h3>
+                           <p class="text-slate-400 font-mono text-sm">ระบบ AI กำลังตรวจสอบเครดิตบูโรและวิเคราะห์วงเงิน</p>
+                        </div>
+                    `;
+                } else if (displayStatus === 'approved') {
+                    container.innerHTML = `
+                        <div class="space-y-6 animate-slide-up">
+                          <div class="bg-slate-900 rounded-lg shadow-xl overflow-hidden border border-slate-700 relative group">
+                            <div class="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-green-400 to-emerald-600"></div>
+                            <div class="absolute top-0 right-0 p-3">
+                               <div class="flex items-center space-x-2 bg-slate-950/80 px-3 py-1 rounded-full text-[10px] text-green-400 border border-green-900 shadow-sm backdrop-blur-sm">
+                                 <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                                 <div class="flex items-center">อนุมัติแล้ว (Approved)</div>
+                               </div>
+                            </div>
+                            <div class="p-8">
+                              <div class="flex justify-between items-start">
+                                <div>
+                                  <div class="flex items-center space-x-3 mb-3">
+                                     <span class="text-slate-500 text-xs font-mono">ID: ${data.refId}</span>
+                                  </div>
+                                  <h3 class="text-4xl font-bold text-white mb-1 tracking-tight">อนุมัติวงเงิน</h3>
+                                  <p class="text-slate-400 text-sm">ระบบพร้อมโอนเงินเข้าบัญชี</p>
+                                </div>
+                                <div class="bg-green-500/10 p-4 rounded-full border border-green-500/30">
+                                  <i data-lucide="check-circle" class="h-8 w-8 text-green-400"></i>
+                                </div>
+                              </div>
+                              <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-6">
+                                <div class="bg-slate-950/50 p-4 rounded border border-slate-800">
+                                  <p class="text-[10px] text-slate-500 uppercase tracking-widest mb-1">วงเงิน</p>
+                                  <p class="text-lg font-bold text-white font-mono">${formatCurrency(data.loanAmount)}</p>
+                                </div>
+                                <div class="bg-slate-950/50 p-4 rounded border border-slate-800">
+                                  <p class="text-[10px] text-slate-500 uppercase tracking-widest mb-1">ผ่อน/สัปดาห์</p>
+                                  <p class="text-lg font-bold text-cyan-400 font-mono">${formatCurrency(data.weeklyPayment)}</p>
+                                </div>
+                                <div class="bg-slate-950/50 p-4 rounded border border-slate-800">
+                                  <p class="text-[10px] text-slate-500 uppercase tracking-widest mb-1">ดอกเบี้ย</p>
+                                  <p class="text-lg font-bold text-white font-mono">15%</p>
+                                </div>
+                                <div class="bg-slate-950/50 p-4 rounded border border-slate-800">
+                                  <p class="text-[10px] text-slate-500 uppercase tracking-widest mb-1">เวลา</p>
+                                  <p class="text-lg font-bold text-white font-mono">${data.loanWeeks} สัปดาห์</p>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="bg-slate-950 px-8 py-4 border-t border-slate-800 flex justify-between items-center">
+                              <span class="text-xs text-slate-500 font-mono">โอนเข้า: พร้อมเพย์ ${data.phone}</span>
+                              <button onclick="app.openModal('contract')" class="text-cyan-400 text-xs font-bold hover:text-cyan-300 uppercase tracking-wide flex items-center">
+                                สัญญาอิเล็กทรอนิกส์ <i data-lucide="chevron-right" class="w-3 h-3 ml-1"></i>
+                              </button>
+                            </div>
+                          </div>
+                          <!-- Payment Card -->
+                          <div class="bg-gradient-to-r from-blue-900/40 to-slate-900 rounded-lg shadow-lg p-1 border border-blue-500/30">
+                             <div class="bg-slate-900/50 rounded p-8 backdrop-blur-sm h-full">
+                                <div class="flex justify-between items-center mb-6">
+                                  <div>
+                                    <h3 class="font-bold text-blue-300 text-sm uppercase tracking-widest mb-2">กำหนดชำระงวดถัดไป</h3>
+                                    <p class="text-3xl font-bold text-white font-mono">
+                                        ${new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString('th-TH')}
+                                    </p>
+                                  </div>
+                                  <div class="p-3 bg-blue-500/10 rounded-full border border-blue-400/20">
+                                    <i data-lucide="dollar-sign" class="h-8 w-8 text-blue-400"></i>
+                                  </div>
+                                </div>
+                                <div class="flex space-x-4">
+                                  <button onclick="app.openModal('payment')" class="bg-white text-slate-900 px-6 py-3 rounded font-bold hover:bg-cyan-50 transition shadow-lg uppercase text-sm tracking-wider">
+                                    ชำระเงิน
+                                  </button>
+                                </div>
+                             </div>
+                          </div>
+                        </div>
+                    `;
+                } else {
+                    container.innerHTML = `
+                        <div class="bg-slate-900 rounded-lg border border-red-900/50 p-8 text-center shadow-xl animate-fade-in">
+                           <div class="bg-red-500/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                               <i data-lucide="x" class="w-10 h-10 text-red-500"></i>
+                           </div>
+                           <h3 class="text-2xl font-bold text-white mb-2">ไม่ผ่านการอนุมัติ</h3>
+                           <p class="text-slate-400 mb-6">${data.rejectReason || 'คุณสมบัติไม่ผ่านเกณฑ์'}</p>
+                           <button onclick="app.router('apply')" class="text-slate-500 hover:text-white underline text-sm">ยื่นเอกสารใหม่</button>
+                        </div>
+                    `;
+                }
+                lucide.createIcons();
+            },
+
+            // Dynamic Nav Buttons
+            renderAuthButtons: () => {
+                const desktopContainer = document.getElementById('auth-button-container');
+                const mobileContainer = document.getElementById('mobile-auth-btn-container');
+                
+                let html = '';
+                if (state.applicationData) {
+                    html = `<button onclick="app.router('dashboard')" class="bg-slate-800 border border-green-500/50 text-green-400 px-4 py-2 rounded-lg font-medium flex items-center hover:bg-slate-700 transition-all shadow-[0_0_10px_rgba(34,197,94,0.2)]">
+                              <i data-lucide="user" class="w-4 h-4 mr-2"></i> บัญชีของฉัน
+                            </button>`;
+                } else {
+                    html = `<button onclick="app.router('apply')" class="bg-gradient-to-r from-cyan-600 to-blue-600 text-white px-6 py-2 rounded-lg font-bold hover:from-cyan-500 hover:to-blue-500 transition-all transform hover:scale-105 shadow-[0_0_15px_rgba(8,145,178,0.4)] border border-cyan-400/30">
+                              สมัครสินเชื่อ
+                            </button>`;
+                }
+
+                desktopContainer.innerHTML = html;
+                
+                // Mobile version (full width)
+                const mobileHtml = html.replace('bg-slate-800', 'block w-full text-left').replace('bg-gradient-to-r', 'block w-full text-left bg-gradient-to-r text-center');
+                mobileContainer.innerHTML = mobileHtml;
+                
+                lucide.createIcons();
+                
+                // Highlight active nav
+                const navHome = document.getElementById('nav-home');
+                if (state.currentView === 'home') {
+                    navHome.className = "text-cyan-400 drop-shadow-[0_0_5px_rgba(34,211,238,0.5)] font-medium tracking-wide transition-colors";
+                } else {
+                    navHome.className = "text-slate-400 hover:text-cyan-400 font-medium tracking-wide transition-colors";
+                }
+            },
+
+            // Modals
+            openModal: (type) => {
+                const overlay = document.getElementById('modal-overlay');
+                const title = document.getElementById('modal-title');
+                const content = document.getElementById('modal-content');
+                const iconContainer = document.getElementById('modal-icon');
+                
+                overlay.classList.remove('hidden');
+                
+                let iconName = 'info';
+                if (type === 'products') {
+                    title.textContent = 'ผลิตภัณฑ์';
+                    iconName = 'banknote';
+                    content.innerHTML = '<p>รายละเอียดผลิตภัณฑ์สินเชื่อส่วนบุคคล สินเชื่อนาโนไฟแนนซ์...</p>';
+                } else if (type === 'help') {
+                    title.textContent = 'ช่วยเหลือ';
+                    iconName = 'info';
+                    content.innerHTML = '<p>ติดต่อ Support: 02-xxx-xxxx หรือ Line: @nantawatloan</p>';
+                } else if (type === 'contract' && state.applicationData) {
+                    title.textContent = 'สัญญาเงินกู้';
+                    iconName = 'file-check';
+                    const d = state.applicationData;
+                    content.innerHTML = `
+                        <div class="bg-white text-black p-4 rounded text-xs font-mono h-64 overflow-y-auto">
+                           <p class="font-bold mb-2 text-center">สัญญาเงินกู้อิเล็กทรอนิกส์</p>
+                           <p>เลขที่: ${d.refId}</p>
+                           <p>ผู้กู้: ${d.fullName}</p>
+                           <p>จำนวนเงิน: ${formatCurrency(d.loanAmount)}</p>
+                           <hr class="my-2"/>
+                           <p class="text-justify">สัญญาฉบับนี้ทำขึ้นเพื่อเป็นหลักฐานว่าผู้กู้ได้ทำการขอสินเชื่อผ่านระบบ NantawatLoan...</p>
+                        </div>
+                    `;
+                } else if (type === 'payment' && state.applicationData) {
+                    title.textContent = 'ชำระเงิน';
+                    iconName = 'qr-code';
+                    const amount = state.applicationData.weeklyPayment;
+                    content.innerHTML = `
+                        <div class="text-center bg-white p-6 rounded flex flex-col items-center">
+                           <p class="text-slate-600 font-bold mb-2 text-sm">สแกน QR Code เพื่อชำระเงิน</p>
+                           <div class="bg-white p-2 rounded border border-slate-200 shadow-inner mb-4">
+                              <img src="https://promptpay.io/0927105691/${amount}.png" alt="PromptPay QR" class="w-48 h-48 object-contain" />
+                           </div>
+                           <div class="w-full border-t border-slate-200 pt-3">
+                              <p class="text-slate-500 text-xs mb-1">ยอดที่ต้องชำระ</p>
+                              <p class="text-cyan-600 font-bold text-2xl">${formatCurrency(amount)}</p>
+                              <p class="text-slate-400 text-[10px] mt-2 font-mono">ผู้รับเงิน: บจก. นันทวัฒน์โลน</p>
+                           </div>
+                        </div>
+                    `;
+                }
+
+                iconContainer.innerHTML = `<i data-lucide="${iconName}" class="w-6 h-6"></i>`;
+                lucide.createIcons();
+            },
+
+            closeModal: () => {
+                document.getElementById('modal-overlay').classList.add('hidden');
+            }
+        };
+
+        // Start App
+        app.init();
+    </script>
+    <!-- ... existing code ... -->
+    <!-- ================= VIEWS CONTAINER ================= -->
+    <main id="app-container">
+        
+        <!-- VIEW: HOME -->
+<!-- ... existing code ... -->
+        <!-- VIEW: DASHBOARD -->
+        <div id="view-dashboard" class="view-section hidden bg-slate-950 min-h-screen py-10 relative overflow-hidden">
+            <div class="max-w-4xl mx-auto px-4 relative z-10 animate-fade-in">
+                <h2 class="text-2xl font-bold text-white mb-6 uppercase tracking-wider flex items-center">
+                    <span class="w-1 h-8 bg-cyan-500 mr-4"></span>
+                    สถานะบัญชี
+                </h2>
+
+                <div id="dashboard-content">
+                    <!-- Content will be injected by JS -->
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="bg-slate-950 border-t border-slate-900 pt-16 pb-8 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                
+                <!-- Company Info -->
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="bg-gradient-to-r from-cyan-600 to-blue-600 p-1.5 rounded-lg mr-2">
+                            <i data-lucide="zap" class="h-5 w-5 text-white"></i>
+                        </div>
+                        <span class="font-bold text-lg text-white tracking-wider">Nantawat<span class="text-cyan-400">Loan</span></span>
+                    </div>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-6">
+                        นวัตกรรมสินเชื่อดิจิทัลอนุมัติไวด้วยระบบ AI ที่ทันสมัยที่สุด ปลอดภัย โปร่งใส และตรวจสอบได้จริง
+                    </p>
+                    <div class="flex space-x-3">
+                        <a href="#" class="w-8 h-8 rounded bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-cyan-400 hover:border-cyan-500/50 transition-all">
+                            <i data-lucide="facebook" class="w-4 h-4"></i>
+                        </a>
+                        <a href="#" class="w-8 h-8 rounded bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-green-400 hover:border-green-500/50 transition-all">
+                            <i data-lucide="message-circle" class="w-4 h-4"></i>
+                        </a>
+                        <a href="#" class="w-8 h-8 rounded bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-pink-400 hover:border-pink-500/50 transition-all">
+                            <i data-lucide="instagram" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-sm font-bold text-white uppercase tracking-widest mb-6 border-l-2 border-cyan-500 pl-3">เมนูหลัก</h4>
+                    <ul class="space-y-3 text-sm text-slate-400">
+                        <li><button onclick="app.router('home')" class="hover:text-cyan-400 transition flex items-center"><i data-lucide="chevron-right" class="w-3 h-3 mr-2 text-slate-600"></i> หน้าแรก</button></li>
+                        <li><button onclick="app.openModal('products')" class="hover:text-cyan-400 transition flex items-center"><i data-lucide="chevron-right" class="w-3 h-3 mr-2 text-slate-600"></i> ผลิตภัณฑ์สินเชื่อ</button></li>
+                        <li><button onclick="app.openModal('help')" class="hover:text-cyan-400 transition flex items-center"><i data-lucide="chevron-right" class="w-3 h-3 mr-2 text-slate-600"></i> ศูนย์ช่วยเหลือ</button></li>
+                        <li><button onclick="app.router('apply')" class="hover:text-cyan-400 transition flex items-center"><i data-lucide="chevron-right" class="w-3 h-3 mr-2 text-slate-600"></i> สมัครสินเชื่อ</button></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h4 class="text-sm font-bold text-white uppercase tracking-widest mb-6 border-l-2 border-cyan-500 pl-3">ติดต่อเรา</h4>
+                    <ul class="space-y-4 text-sm text-slate-400">
+                        <li class="flex items-start">
+                            <i data-lucide="map-pin" class="w-5 h-5 text-cyan-500 mr-3 mt-0.5 shrink-0"></i>
+                            <span>123 อาคารนันทวัฒน์ ทาวเวอร์ ชั้น 15 <br>ถนนรัชดาภิเษก เขตดินแดง <br>กรุงเทพมหานคร 10400</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i data-lucide="phone" class="w-5 h-5 text-cyan-500 mr-3 shrink-0"></i>
+                            <span class="font-mono">02-123-4567</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i data-lucide="mail" class="w-5 h-5 text-cyan-500 mr-3 shrink-0"></i>
+                            <a href="mailto:contact@nantawatloan.com" class="hover:text-white transition">contact@nantawatloan.com</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Hours -->
+                <div>
+                    <h4 class="text-sm font-bold text-white uppercase tracking-widest mb-6 border-l-2 border-cyan-500 pl-3">เวลาทำการ</h4>
+                    <div class="bg-slate-900 p-4 rounded border border-slate-800">
+                        <ul class="space-y-3 text-sm text-slate-400">
+                            <li class="flex justify-between">
+                                <span>จันทร์ - ศุกร์</span>
+                                <span class="text-white font-mono">08:00 - 20:00</span>
+                            </li>
+                            <li class="flex justify-between">
+                                <span>เสาร์ - อาทิตย์</span>
+                                <span class="text-white font-mono">09:00 - 18:00</span>
+                            </li>
+                            <li class="pt-2 border-t border-slate-800 mt-2 text-xs text-center text-cyan-500 flex items-center justify-center">
+                                <i data-lucide="check-circle" class="w-3 h-3 mr-1"></i> ระบบออนไลน์ 24 ชม.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Divider -->
+            <div class="border-t border-slate-900 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-600">
+                <p>&copy; 2024 NantawatLoan. สงวนลิขสิทธิ์.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-slate-400">นโยบายความเป็นส่วนตัว</a>
+                    <a href="#" class="hover:text-slate-400">เงื่อนไขการใช้บริการ</a>
+                    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="hover:text-cyan-400 flex items-center">
+                        กลับสู่ด้านบน <i data-lucide="arrow-up" class="ml-1 w-3 h-3"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ================= MODALS ================= -->
+<!-- ... existing code ... -->
+</body>
+</html>
